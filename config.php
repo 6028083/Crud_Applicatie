@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'blog_db';
+$dbname = 'crud_applicatie';
 $username = 'root';
 $password = '';
 

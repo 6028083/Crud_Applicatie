@@ -11,7 +11,7 @@ class Database
     private function connect()
     {
         $host = 'localhost';
-        $db   = 'blog_db';  // Vervang dit door de naam van je database
+        $db   = 'crud_applicatie';  // Vervang dit door de naam van je database
         $user = 'root';      // Vervang dit door je MySQL gebruikersnaam (standaard is het 'root' voor XAMPP)
         $pass = '';          // Vervang dit door je MySQL wachtwoord (standaard is het leeg voor XAMPP)
         $charset = 'utf8mb4';
