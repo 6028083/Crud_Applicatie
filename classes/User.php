@@ -65,4 +65,11 @@ class User
             return false;
         }
     }
+
+    public function canDeletePost($userRole, $postUserId, $currentUserId)
+    {
+        return $userRole == 'Eigenaar' ||
+            ($userRole == 'Admin' && $postUserId == $currentUserId) ||
+            ($userRole == 'Gebruiker' && $postUserId == $currentUserId);
+    }
 }
