@@ -18,3 +18,9 @@ function getUserRole($pdo, $user_id)
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result['role_id'];
 }
+
+function isAdmin($pdo, $user_id)
+{
+    $role_id = getUserRole($pdo, $user_id);
+    return $role_id == 1 || $role_id == 2; // 1 voor eigenaar, 2 voor admin
+}
