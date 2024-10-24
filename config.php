@@ -10,3 +10,11 @@ try {
 } catch (PDOException $e) {
     die("Databaseverbinding mislukt: " . $e->getMessage());
 }
+
+function getUserRole($pdo, $user_id)
+{
+    $stmt = $pdo->prepare("SELECT role_id FROM users WHERE id = ?");
+    $stmt->execute([$user_id]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['role_id'];
+}
