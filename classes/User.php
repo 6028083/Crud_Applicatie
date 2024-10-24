@@ -27,4 +27,10 @@ class User
     {
         session_destroy();
     }
+
+    public function getAllUsers()
+    {
+        $stmt = $this->db->getPdo()->query("SELECT users.*, roles.name as role_name FROM users JOIN roles ON users.role_id = roles.id");
+        return $stmt->fetchAll();
+    }
 }
