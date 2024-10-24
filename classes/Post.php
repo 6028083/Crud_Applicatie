@@ -55,4 +55,14 @@ class Post
         }
         return $stmt->fetchAll();
     }
+
+    public function create($title, $content)
+    {
+        $sql = "INSERT INTO posts (title, content) VALUES (:title, :content)";
+        $stmt = $this->db->getPdo()->prepare($sql);
+        return $stmt->execute([
+            ':title' => $title,
+            ':content' => $content
+        ]);
+    }
 }
