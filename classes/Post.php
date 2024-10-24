@@ -41,4 +41,18 @@ class Post
         $stmt = $this->db->getPdo()->prepare("DELETE FROM posts WHERE id = ?");
         return $stmt->execute([$postId]);
     }
+
+    public function getPostsByUserRole($userId, $userRole)
+    {
+        if ($userRole == 'Eigenaar') {
+            $stmt = $this->db->getPdo()->query("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY created_at DESC");
+        } elseif ($userRole == 'Admin') {
+            $stmt = $this->db->getPdo()->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.user_id = ? OR users.role_id = 3 ORDER BY created_at DESC");
+            $stmt->execute([$userId]);
+        } else {
+            $stmt = $this->db->getPdo()->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.user_id = ? ORDER BY created_at DESC");
+            $stmt->execute([$userId]);
+        }
+        return $stmt->fetchAll();
+    }
 }
