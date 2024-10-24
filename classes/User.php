@@ -72,4 +72,10 @@ class User
             ($userRole == 'Admin' && $postUserId == $currentUserId) ||
             ($userRole == 'Gebruiker' && $postUserId == $currentUserId);
     }
+
+    public function getAllRoles()
+    {
+        $stmt = $this->db->getPdo()->query("SELECT * FROM roles");
+        return $stmt->fetchAll();
+    }
 }
