@@ -17,4 +17,16 @@ class Post
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    public function getTotalPosts()
+    {
+        return $this->db->getPdo()->query("SELECT COUNT(*) FROM posts")->fetchColumn();
+    }
+
+    public function getPostById($postId)
+    {
+        $stmt = $this->db->getPdo()->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
+        $stmt->execute([$postId]);
+        return $stmt->fetch();
+    }
 }
