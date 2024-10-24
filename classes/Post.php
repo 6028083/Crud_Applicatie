@@ -29,4 +29,16 @@ class Post
         $stmt->execute([$postId]);
         return $stmt->fetch();
     }
+
+    public function updatePost($postId, $title, $content)
+    {
+        $stmt = $this->db->getPdo()->prepare("UPDATE posts SET title = ?, content = ? WHERE id = ?");
+        return $stmt->execute([$title, $content, $postId]);
+    }
+
+    public function deletePost($postId)
+    {
+        $stmt = $this->db->getPdo()->prepare("DELETE FROM posts WHERE id = ?");
+        return $stmt->execute([$postId]);
+    }
 }
