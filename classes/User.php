@@ -39,4 +39,30 @@ class User
         $stmt = $this->db->getPdo()->prepare("UPDATE users SET role_id = ? WHERE id = ?");
         return $stmt->execute([$newRoleId, $userId]);
     }
+
+    public function deleteUser($userId)
+    {
+        try {
+            // Start een transactie
+            $this->db->getPdo()->beginTransaction();
+
+            // Verwijder eerst alle posts van de gebruiker
+            $stmtDeletePosts = $this->db->getPdo()->prepare("DELETE FROM posts WHERE user_id = ?");
+            $stmtDeletePosts->execute([$userId]);
+
+            // Verwijder nu de gebruiker
+            $stmtDeleteUser = $this->db->getPdo()->prepare("DELETE FROM users WHERE id = ?");
+            $stmtDeleteUser->execute([$userId]);
+
+            // Commit de transactie
+            $this->db->getPdo()->commit();
+
+            return true;
+        } catch (\PDOException $e) {
+            // Als er iets misgaat, rol de transactie terug
+            $this->db->getPdo()->rollBack();
+            error_log("Fout bij het verwijderen van gebruiker: " . $e->getMessage());
+            return false;
+        }
+    }
 }
